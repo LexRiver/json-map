@@ -26,6 +26,8 @@ import {Async} from '@lexriver/json-map'
     valueByPerson.get({name:'smith', age: 20}) // undefined
 
 ```
+<br/>
+<br/>
 
 ## Methods
 
@@ -36,6 +38,9 @@ import {Async} from '@lexriver/json-map'
 ```
 
 K and V could be of any type including Object
+
+<br/>
+<br/>
 
 ### iterate
 
@@ -59,6 +64,8 @@ K and V could be of any type including Object
 ```
 
 
+<br/>
+<br/>
 
 
 ### get(key:K):V|undefined
@@ -69,6 +76,10 @@ get value by key
     myMap.get({name:'John', age:10})
 ```
 
+<br/>
+<br/>
+
+
 ### set(key:K, value:V):JsonMap<K,V>
 
 create or update value for key
@@ -76,6 +87,9 @@ create or update value for key
 ```typescript
     myMap.set({name:'John', age:10}, 100)
 ```
+
+<br/>
+<br/>
 
 
 ### has(key:K):boolean
@@ -86,6 +100,10 @@ check if map has a key
     myMap.has({name:'John', age:10})
 ```
 
+<br/>
+<br/>
+
+
 ### delete(key:K):boolean
 
 Delete one item by key
@@ -93,6 +111,10 @@ Delete one item by key
 ```typescript
     myMap.delete({name:'John', age:10})
 ```
+
+<br/>
+<br/>
+
 
 ### clear():void
 
@@ -102,6 +124,10 @@ Remove all items from map
     myMap.clear()
 ```
 
+<br/>
+<br/>
+
+
 ### size:number
 
 Get count of items in map
@@ -110,6 +136,8 @@ Get count of items in map
     myMap.size
 ```
 
+<br/>
+<br/>
 
 
 
@@ -123,6 +151,10 @@ get all keys in map
     }
 ```
 
+<br/>
+<br/>
+
+
 ### values():IterableIterator<V>
 
 get list of all values
@@ -133,6 +165,10 @@ get list of all values
     }
 ```
 
+<br/>
+<br/>
+
+
 ### toArray():[K,V][]
 
 get map as array
@@ -140,6 +176,10 @@ get map as array
 ```typescript
     myMap.toArray()
 ```
+
+<br/>
+<br/>
+
 
 ### initFromArray(initValue:Iterable<readonly [K,V]>|readonly [K,V][])
 
@@ -149,6 +189,10 @@ get map as array
     myMap.initFromArray(mySavedArray)
  ```
 
+<br/>
+<br/>
+
+
 
 ### toJsonString(pretty:boolean=false):string
 
@@ -157,6 +201,10 @@ get map as json string
 ```typescript
     myMap.toJsonString(true)
 ```
+
+<br/>
+<br/>
+
 
 ### initFromJsonString(jsonString:string):JsonMap<K,V>
 
