@@ -1,4 +1,4 @@
-import {DataTypes} from 'lex-data-types'
+import {DataTypes} from '@lexriver/data-types'
 export class JsonMap<K,V> implements Iterable<[K,V]>{
 
     constructor(initValue?:Iterable<readonly [K,V]>|readonly [K,V][]){

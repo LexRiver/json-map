@@ -55,7 +55,7 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsonMap = void 0;
-var lex_data_types_1 = require("lex-data-types");
+var data_types_1 = require("@lexriver/data-types");
 var JsonMap = /** @class */ (function () {
     function JsonMap(initValue) {
         this.internalMap = new Map();
@@ -112,12 +112,12 @@ var JsonMap = /** @class */ (function () {
     };
     JsonMap.prototype.delete = function (key) {
         var e_2, _a;
-        if (lex_data_types_1.DataTypes.isPrimitive(key))
+        if (data_types_1.DataTypes.isPrimitive(key))
             return this.internalMap.delete(key);
         try {
             for (var _b = __values(this.internalMap.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var internalKey = _c.value;
-                if (lex_data_types_1.DataTypes.isEqual(key, internalKey)) {
+                if (data_types_1.DataTypes.isEqual(key, internalKey)) {
                     return this.internalMap.delete(internalKey);
                 }
             }
@@ -138,12 +138,12 @@ var JsonMap = /** @class */ (function () {
     };
     JsonMap.prototype.get = function (key) {
         var e_3, _a;
-        if (lex_data_types_1.DataTypes.isPrimitive(key))
+        if (data_types_1.DataTypes.isPrimitive(key))
             return this.internalMap.get(key);
         try {
             for (var _b = __values(this.internalMap.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var internalKey = _c.value;
-                if (lex_data_types_1.DataTypes.isEqual(key, internalKey)) {
+                if (data_types_1.DataTypes.isEqual(key, internalKey)) {
                     return this.internalMap.get(internalKey);
                 }
             }
@@ -159,12 +159,12 @@ var JsonMap = /** @class */ (function () {
     };
     JsonMap.prototype.has = function (key) {
         var e_4, _a;
-        if (lex_data_types_1.DataTypes.isPrimitive(key))
+        if (data_types_1.DataTypes.isPrimitive(key))
             return this.internalMap.has(key);
         try {
             for (var _b = __values(this.internalMap.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var internalKey = _c.value;
-                if (lex_data_types_1.DataTypes.isEqual(key, internalKey)) {
+                if (data_types_1.DataTypes.isEqual(key, internalKey)) {
                     return true;
                 }
             }
@@ -183,14 +183,14 @@ var JsonMap = /** @class */ (function () {
     };
     JsonMap.prototype.set = function (key, value) {
         var e_5, _a;
-        if (lex_data_types_1.DataTypes.isPrimitive(key)) {
+        if (data_types_1.DataTypes.isPrimitive(key)) {
             this.internalMap.set(key, value);
             return this;
         }
         try {
             for (var _b = __values(this.internalMap.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var internalKey = _c.value;
-                if (lex_data_types_1.DataTypes.isEqual(key, internalKey)) {
+                if (data_types_1.DataTypes.isEqual(key, internalKey)) {
                     this.internalMap.set(internalKey, value);
                     return this;
                 }

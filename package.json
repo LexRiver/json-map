@@ -9,9 +9,18 @@
         "test": "jest",
         "build": "tsc"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "json",
+        "obect",
+        "map",
+        "typescript"
+    ],
+    "author": "LexRiver <LexRiver@gmail.com> (https://github.com/LexRiver/)",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LexRiver/array-methods.git"
+    },
     "devDependencies": {
         "@types/jest": "^24.0.18",
         "@types/node": "^12.12.12",
@@ -20,6 +29,6 @@
         "typescript": "^3.8.3"
     },
     "dependencies": {
-        "lex-data-types": "../lex-data-types"
+        "@lexriver/data-types": "^2.0.0"
     }
 }

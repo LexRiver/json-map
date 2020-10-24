@@ -194,14 +194,14 @@ test('boolean keys', function () {
     expect(x.get(false)).toEqual(0);
 });
 test('iterable', function () {
-    var e_5, _a;
+    var e_5, _a, e_6, _b;
     var x = new JsonMap_1.JsonMap();
     x.set(1, 2);
     x.set(3, 4);
     var sum = 0;
     try {
         for (var x_2 = __values(x), x_2_1 = x_2.next(); !x_2_1.done; x_2_1 = x_2.next()) {
-            var _b = __read(x_2_1.value, 2), k = _b[0], v = _b[1];
+            var _c = __read(x_2_1.value, 2), k = _c[0], v = _c[1];
             sum += k;
             sum += v;
         }
@@ -214,4 +214,19 @@ test('iterable', function () {
         finally { if (e_5) throw e_5.error; }
     }
     expect(sum).toEqual(1 + 2 + 3 + 4);
+    try {
+        for (var _d = __values(x.entiries()), _e = _d.next(); !_e.done; _e = _d.next()) {
+            var _f = __read(_e.value, 2), k = _f[0], v = _f[1];
+            sum += k;
+            sum += v;
+        }
+    }
+    catch (e_6_1) { e_6 = { error: e_6_1 }; }
+    finally {
+        try {
+            if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
+        }
+        finally { if (e_6) throw e_6.error; }
+    }
+    expect(sum).toEqual(2 * (1 + 2 + 3 + 4));
 });
