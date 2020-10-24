@@ -1,0 +1,25 @@
+{
+    "sideEffects": false,
+    "name": "@lexriver/json-map",
+    "version": "1.0.0",
+    "description": "Use object as a key for Map",
+    "main": "out/index.js",
+    "types": "out/index.d.ts",
+    "scripts": {
+        "test": "jest",
+        "build": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jest": "^24.0.18",
+        "@types/node": "^12.12.12",
+        "jest": "^24.9.0",
+        "ts-jest": "^24.2.0",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "lex-data-types": "../lex-data-types"
+    }
+}
