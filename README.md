@@ -27,7 +27,6 @@ import {Async} from '@lexriver/json-map'
 
 ```
 <br/>
-<br/>
 
 ## Methods
 
@@ -39,7 +38,6 @@ import {Async} from '@lexriver/json-map'
 
 K and V could be of any type including Object
 
-<br/>
 <br/>
 
 ### iterate
@@ -65,7 +63,6 @@ K and V could be of any type including Object
 
 
 <br/>
-<br/>
 
 
 ### get(key:K):V|undefined
@@ -76,7 +73,6 @@ get value by key
     myMap.get({name:'John', age:10})
 ```
 
-<br/>
 <br/>
 
 
@@ -89,7 +85,6 @@ create or update value for key
 ```
 
 <br/>
-<br/>
 
 
 ### has(key:K):boolean
@@ -100,7 +95,6 @@ check if map has a key
     myMap.has({name:'John', age:10})
 ```
 
-<br/>
 <br/>
 
 
@@ -113,7 +107,6 @@ Delete one item by key
 ```
 
 <br/>
-<br/>
 
 
 ### clear():void
@@ -125,7 +118,6 @@ Remove all items from map
 ```
 
 <br/>
-<br/>
 
 
 ### size:number
@@ -136,7 +128,6 @@ Get count of items in map
     myMap.size
 ```
 
-<br/>
 <br/>
 
 
@@ -152,7 +143,6 @@ get all keys in map
 ```
 
 <br/>
-<br/>
 
 
 ### values():IterableIterator<V>
@@ -166,7 +156,6 @@ get list of all values
 ```
 
 <br/>
-<br/>
 
 
 ### toArray():[K,V][]
@@ -177,7 +166,6 @@ get map as array
     myMap.toArray()
 ```
 
-<br/>
 <br/>
 
 
@@ -190,7 +178,6 @@ get map as array
  ```
 
 <br/>
-<br/>
 
 
 
@@ -202,7 +189,6 @@ get map as json string
     myMap.toJsonString(true)
 ```
 
-<br/>
 <br/>
 
 
