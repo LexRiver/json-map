@@ -152,3 +152,19 @@ test('iterable', () => {
     }
     expect(sum).toEqual(2*(1+2+3+4))
 })
+
+class MyClass{
+    constructor(public text:string){
+
+    }
+}
+test('class', () => {
+    let x = new JsonMap<MyClass,number>()
+    let firstInstance = new MyClass('first')
+    let secondInstance = new MyClass('second')
+    x.set(firstInstance, 10)
+    x.set(secondInstance, 20)
+    expect(x.get(firstInstance)).toEqual(10)
+    expect(x.get(secondInstance)).toEqual(20)
+    expect(x.get(new MyClass('first'))).toEqual(10) //! 
+})
