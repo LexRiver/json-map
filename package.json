@@ -1,7 +1,7 @@
 {
     "sideEffects": false,
     "name": "@lexriver/json-map",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Use object as a key for Map",
     "main": "out/index.js",
     "types": "out/index.d.ts",
