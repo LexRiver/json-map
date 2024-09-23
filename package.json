@@ -29,6 +29,6 @@
         "typescript": "^3.8.3"
     },
     "dependencies": {
-        "@lexriver/data-types": "^2.0.0"
+        "@lexriver/data-types": "^2.0.1"
     }
 }
