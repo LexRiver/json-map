@@ -1,12 +1,17 @@
 {
     "sideEffects": false,
     "name": "@lexriver/json-map",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "Use object as a key for Map",
-    "main": "out/index.js",
-    "types": "out/index.d.ts",
+    "type": "module",
+    "exports": {
+        "./*": {
+            "import": "./out/src/*.mjs",
+            "default": "./out/src/*.mjs"
+        }
+    },
     "scripts": {
-        "test": "jest",
+        "test": "vitest",
         "build": "tsc"
     },
     "keywords": [
@@ -22,13 +27,11 @@
         "url": "git+https://github.com/LexRiver/array-methods.git"
     },
     "devDependencies": {
-        "@types/jest": "^24.0.18",
-        "@types/node": "^12.12.12",
-        "jest": "^24.9.0",
-        "ts-jest": "^24.2.0",
-        "typescript": "^3.8.3"
+        "@types/node": "^22.7.0",
+        "typescript": "^5.6.2",
+        "vitest": "^2.1.1"
     },
     "dependencies": {
-        "@lexriver/data-types": "^2.0.1"
+        "@lexriver/data-types": "^3.0.4"
     }
 }

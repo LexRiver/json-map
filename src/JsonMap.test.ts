@@ -1,4 +1,5 @@
-import { JsonMap } from "./JsonMap"
+import { expect, test } from 'vitest'
+import { JsonMap } from "./JsonMap.mjs"
 
 test('JsonMap', () => {
     let x = new JsonMap<Object,string>()
