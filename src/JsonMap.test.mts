@@ -3,6 +3,7 @@ import { JsonMap } from "./JsonMap.mjs"
 
 test('JsonMap', () => {
     let x = new JsonMap<Object,string>()
+
     x.set({aa:'aa'}, 'aaaa')
     x.set({bb:'bb'}, 'bbbb')
     expect(x.get({aa:'aa'})).toEqual('aaaa')
