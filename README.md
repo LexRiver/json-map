@@ -9,7 +9,7 @@ This package provides class JsonMap<K,V> which has interface similar to Map<K,V>
 ## Import
 
 ```typescript
-import {Async} from '@lexriver/json-map'
+import { JsonMap } from '@lexriver/json-map'
 ```
 
 ## Usage
@@ -43,14 +43,14 @@ K and V could be of any type including Object
 ### iterate
 
 ```typescript
-    let myMap = new JsonMap<Object, number>()
+    const myMap = new JsonMap<Object, number>()
     
-    for(let [key,value] of myMap){
+    for(const [key,value] of myMap){
         // ...
     }
 
     // or...
-    for(let [key,value] of myMap.entiries()){
+    for(const [key,value] of myMap.entiries()){
         // ...
     }
 
@@ -67,7 +67,7 @@ K and V could be of any type including Object
 
 ### get(key:K):V|undefined
 
-get value by key
+Get value by key. Returns `undefined` if key not found.
 
 ```typescript
     myMap.get({name:'John', age:10})
@@ -78,7 +78,7 @@ get value by key
 
 ### set(key:K, value:V):JsonMap<K,V>
 
-create or update value for key
+Create or update value for key.
 
 ```typescript
     myMap.set({name:'John', age:10}, 100)
@@ -89,7 +89,7 @@ create or update value for key
 
 ### has(key:K):boolean
 
-check if map has a key
+Check if map has a key.
 
 ```typescript
     myMap.has({name:'John', age:10})
@@ -100,7 +100,7 @@ check if map has a key
 
 ### delete(key:K):boolean
 
-Delete one item by key
+Delete one item by key.
 
 ```typescript
     myMap.delete({name:'John', age:10})
@@ -111,7 +111,7 @@ Delete one item by key
 
 ### clear():void
 
-Remove all items from map
+Remove all items from map.
 
 ```typescript
     myMap.clear()
@@ -122,7 +122,7 @@ Remove all items from map
 
 ### size:number
 
-Get count of items in map
+Get count of items in map.
 
 ```typescript
     myMap.size
@@ -134,10 +134,10 @@ Get count of items in map
 
 ### keys():IterableIterator<K>
 
-get all keys in map
+Get all keys in map.
 
 ```typescript
-    for(let key of myMap.keys()){
+    for(const key of myMap.keys()){
         //...
     }
 ```
@@ -147,10 +147,10 @@ get all keys in map
 
 ### values():IterableIterator<V>
 
-get list of all values
+Get all values in map.
 
 ```typescript
-    for(let value of myMap.values()){
+    for(const value of myMap.values()){
         // ...
     }
 ```
@@ -160,7 +160,7 @@ get list of all values
 
 ### toArray():[K,V][]
 
-get map as array
+Get map as array.
 
 ```typescript
     myMap.toArray()
@@ -171,7 +171,7 @@ get map as array
 
 ### initFromArray(initValue:Iterable<readonly [K,V]>|readonly [K,V][])
 
- fill map with keys and values from array
+ Fill map with keys and values from array.
 
  ```typescript
     myMap.initFromArray(mySavedArray)
@@ -183,7 +183,7 @@ get map as array
 
 ### toJsonString(pretty:boolean=false):string
 
-get map as json string
+Get map as json string.
 
 ```typescript
     myMap.toJsonString(true)
@@ -194,7 +194,7 @@ get map as json string
 
 ### initFromJsonString(jsonString:string):JsonMap<K,V>
 
-fill map with keys and values from json string
+Fill map with keys and values from json string.
  
  ```typescript
     myMap.initFromJsonString(mySavedJsonString)

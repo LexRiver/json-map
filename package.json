@@ -1,7 +1,7 @@
 {
     "sideEffects": false,
     "name": "@lexriver/json-map",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Use object as a key for Map",
     "type": "module",
     "exports": "./out/src/JsonMap.mjs",
@@ -22,12 +22,12 @@
         "url": "git+https://github.com/LexRiver/array-methods.git"
     },
     "devDependencies": {
-        "@types/node": "^22.7.0",
+        "@types/node": "^22.7.4",
         "rimraf": "^6.0.1",
         "typescript": "^5.6.2",
         "vitest": "^2.1.1"
     },
     "dependencies": {
-        "@lexriver/data-types": "^3.0.5"
+        "@lexriver/data-types": "^3.1.0"
     }
 }

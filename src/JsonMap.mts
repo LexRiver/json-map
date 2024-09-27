@@ -27,7 +27,7 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
         if(DataTypes.isPrimitive(key)) return this.internalMap.delete(key)
 
         for(let internalKey of this.internalMap.keys()){
-            if(DataTypes.isEqual(key, internalKey)){
+            if(this.keysAreEqual(key, internalKey)){
                 return this.internalMap.delete(internalKey)
             }
         }
@@ -45,18 +45,22 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
         if(DataTypes.isPrimitive(key)) return this.internalMap.get(key)
 
         for(let internalKey of this.internalMap.keys()){
-            if(DataTypes.isEqual(key, internalKey)){
+            if(this.keysAreEqual(key, internalKey)){
                 return this.internalMap.get(internalKey)
             }
         }
         return undefined
     }
 
+    protected keysAreEqual(key1:K, key2:K){
+        return DataTypes.isEqual(key1, key2, {ignoreNullAndUndefinedValuesInObject: true})
+    }
+
     public has(key:K){
         if(DataTypes.isPrimitive(key)) return this.internalMap.has(key)
 
-        for(let internalKey of this.internalMap.keys()){
-            if(DataTypes.isEqual(key, internalKey)){
+        for(const internalKey of this.internalMap.keys()){
+            if(this.keysAreEqual(key, internalKey)){
                 return true
             }
         }
@@ -73,7 +77,7 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
             return this
         }
         for(let internalKey of this.internalMap.keys()){
-            if(DataTypes.isEqual(key, internalKey)){
+            if(this.keysAreEqual(key, internalKey)){
                 this.internalMap.set(internalKey, value)
                 return this
             }

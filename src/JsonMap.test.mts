@@ -170,3 +170,17 @@ test('class', () => {
     expect(x.get(secondInstance)).toEqual(20)
     expect(x.get(new MyClass('first'))).toEqual(10) //! 
 })
+
+test('object with undefined value', () => {
+    type K = {a:string, b:string, c?:string}
+    const x = new JsonMap<K,string>()
+    x.set({a:'a', b:'b', c:'c'}, 'first')
+    x.set({a:'a', b:'b'}, 'second')
+    x.set({a:'a', b:'b', c:undefined}, 'third')
+    expect(x.get({a:'a', b:'b'})).toEqual('third')
+    x.delete({a:'a', b:'b'})
+    expect(x.has({a:'a', b:'b'})).toBeFalsy()
+    expect(x.get({a:'a', b:'b'})).toBeUndefined()
+    expect(x.size).toEqual(1)
+
+})
