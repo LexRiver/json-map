@@ -88,6 +88,52 @@ function serializeValue(value:unknown, ancestors:Set<object>, path:string):Seria
     }
 }
 
+const equalityOptions = {ignoreNullAndUndefinedValuesInObject: true} as const
+
+function structurallyEqualWithNaN(left:unknown, right:unknown, seen:WeakMap<object, WeakSet<object>> = new WeakMap()):boolean{
+    if(left === right || (typeof left === 'number' && typeof right === 'number' && Number.isNaN(left) && Number.isNaN(right))){
+        return true
+    }
+    if(DataTypes.isEqual(left, right, equalityOptions)) return true
+    if(left === null || right === null || typeof left !== 'object' || typeof right !== 'object') return false
+
+    if(left instanceof Date || right instanceof Date){
+        return left instanceof Date
+            && right instanceof Date
+            && structurallyEqualWithNaN(left.getTime(), right.getTime(), seen)
+    }
+    if(Array.isArray(left) || Array.isArray(right)){
+        if(!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false
+        for(let index = 0; index < left.length; index++){
+            if(!structurallyEqualWithNaN(left[index], right[index], seen)) return false
+        }
+        return true
+    }
+    if(Object.prototype.toString.call(left) !== '[object Object]' || Object.prototype.toString.call(right) !== '[object Object]'){
+        return false
+    }
+
+    let rightObjects = seen.get(left)
+    if(rightObjects?.has(right)) return true
+    if(!rightObjects){
+        rightObjects = new WeakSet()
+        seen.set(left, rightObjects)
+    }
+    rightObjects.add(right)
+
+    const leftKeys = Object.keys(left).filter(key => (left as Record<string, unknown>)[key] != null)
+    const rightKeys = Object.keys(right).filter(key => (right as Record<string, unknown>)[key] != null)
+    if(leftKeys.length !== rightKeys.length) return false
+    return leftKeys.every(key =>
+        rightKeys.includes(key)
+        && structurallyEqualWithNaN(
+            (left as Record<string, unknown>)[key],
+            (right as Record<string, unknown>)[key],
+            seen
+        )
+    )
+}
+
 function deserializeValue(value:unknown, path:string):unknown{
     if(value === null || typeof value === 'string' || typeof value === 'boolean') return value
     if(typeof value === 'number' && Number.isFinite(value)) return value
@@ -202,7 +248,7 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
     }
 
     protected keysAreEqual(key1:K, key2:K){
-        return DataTypes.isEqual(key1, key2, {ignoreNullAndUndefinedValuesInObject: true})
+        return structurallyEqualWithNaN(key1, key2)
     }
 
     public has(key:K){

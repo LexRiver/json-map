@@ -174,6 +174,7 @@ test('JSON round-trip preserves special primitive keys and invalid dates', () =>
     expect(restored.get(Infinity)).toEqual('infinity')
     expect(restored.get(-Infinity)).toEqual('negative infinity')
     expect(restored.get(undefined)).toEqual('undefined')
+    expect(restored.get(new Date(NaN))).toEqual('invalid date')
     const invalidDate = restored.toArray().find(([key]) => key instanceof Date)?.[0] as Date
     expect(invalidDate).toBeInstanceOf(Date)
     expect(Number.isNaN(invalidDate.getTime())).toBeTruthy()
@@ -218,6 +219,29 @@ test('number keys', () => {
     let x = new JsonMap<number, string>()
     x.set(11,'aa')    
     expect(x.get(11)).toEqual('aa')
+})
+
+test('structurally equivalent keys containing NaN support all key operations', () => {
+    const map = new JsonMap<{score:number, nested:{values:number[]}}, string>()
+    map.set({score: NaN, nested: {values: [1, NaN]}}, 'first')
+
+    const equivalentKey = {score: NaN, nested: {values: [1, NaN]}}
+    expect(map.get(equivalentKey)).toEqual('first')
+    expect(map.has(equivalentKey)).toBeTruthy()
+    expect(map.get({score: NaN, nested: {values: [1, 2]}})).toBeUndefined()
+
+    map.set(equivalentKey, 'updated')
+    expect(map.size).toEqual(1)
+    expect(map.get({score: NaN, nested: {values: [1, NaN]}})).toEqual('updated')
+
+    expect(map.delete({score: NaN, nested: {values: [1, NaN]}})).toBeTruthy()
+    expect(map.size).toEqual(0)
+})
+
+test('invalid Date keys are structurally retrievable', () => {
+    const map = new JsonMap<{date:Date}, string>()
+    map.set({date: new Date(NaN)}, 'invalid')
+    expect(map.get({date: new Date(NaN)})).toEqual('invalid')
 })
 
 test('boolean keys', () => {
