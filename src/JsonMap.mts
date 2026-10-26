@@ -3,9 +3,7 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
 
     constructor(initValue?:Iterable<readonly [K,V]>|readonly [K,V][]){
         if(initValue){
-            this.internalMap = new Map<K,V>(initValue)
-        } else {
-            this.internalMap = new Map<K,V>()
+            this.initFromArray(initValue)
         }
     }
 
@@ -101,11 +99,14 @@ export class JsonMap<K,V> implements Iterable<[K,V]>{
     }
 
     public initFromJsonString(jsonString:string){
-        this.internalMap = new Map<K,V>(JSON.parse(jsonString))
+        this.initFromArray(JSON.parse(jsonString))
     }
 
     public initFromArray(initValue:Iterable<readonly [K,V]>|readonly [K,V][]){
-        this.internalMap = new Map<K,V>(initValue)
+        this.internalMap.clear()
+        for(const [key, value] of initValue){
+            this.set(key, value)
+        }
     }
 
 

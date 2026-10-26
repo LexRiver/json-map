@@ -107,6 +107,27 @@ test('JsonMap', () => {
 
 })
 
+test('initialization deduplicates structurally equivalent keys', () => {
+    const entries = [
+        [{id: 1}, 'first'],
+        [{id: 1}, 'updated']
+    ] as const
+
+    const fromConstructor = new JsonMap(entries)
+    expect(fromConstructor.size).toEqual(1)
+    expect(fromConstructor.get({id: 1})).toEqual('updated')
+
+    const fromArray = new JsonMap<{id:number}, string>()
+    fromArray.initFromArray(entries)
+    expect(fromArray.size).toEqual(1)
+    expect(fromArray.get({id: 1})).toEqual('updated')
+
+    const fromJson = new JsonMap<{id:number}, string>()
+    fromJson.initFromJsonString(JSON.stringify(entries))
+    expect(fromJson.size).toEqual(1)
+    expect(fromJson.get({id: 1})).toEqual('updated')
+})
+
 test('typed object as key', () => {
     let x = new JsonMap<{name:string, age:number},number>()
     x.set({name:'John', age: 10}, 100)
