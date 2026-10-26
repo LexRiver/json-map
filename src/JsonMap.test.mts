@@ -93,10 +93,14 @@ test('JsonMap', () => {
     x.clear()
     x.set({aa:'aa'}, 'aaaa')
     x.set({bb:'bb'}, 'bbbb')
-    expect(x.toJsonString()).toEqual(`[[{"aa":"aa"},"aaaa"],[{"bb":"bb"},"bbbb"]]`)
+    expect(JSON.parse(x.toJsonString())).toMatchObject({
+        format: '@lexriver/json-map',
+        version: 1
+    })
 
     //from json
-    let y = new JsonMap<Object,string>(JSON.parse(x.toJsonString()))
+    let y = new JsonMap<Object,string>()
+    y.initFromJsonString(x.toJsonString())
     expect(y.get({aa:'aa'})).toEqual('aaaa')
     expect(y.get({bb:'bb'})).toEqual('bbbb')
 
@@ -126,6 +130,72 @@ test('initialization deduplicates structurally equivalent keys', () => {
     fromJson.initFromJsonString(JSON.stringify(entries))
     expect(fromJson.size).toEqual(1)
     expect(fromJson.get({id: 1})).toEqual('updated')
+})
+
+test('JSON round-trip preserves supported non-JSON values', () => {
+    const sparseValue = new Array(5)
+    sparseValue[1] = undefined
+    sparseValue[3] = NaN
+    sparseValue[4] = -Infinity
+    const key = {
+        createdAt: new Date('2024-01-02T03:04:05.678Z'),
+        missing: undefined,
+        limits: [Infinity, -Infinity]
+    }
+    const original = new JsonMap<typeof key, unknown>([[key, sparseValue]])
+
+    const restored = new JsonMap<typeof key, unknown>()
+    restored.initFromJsonString(original.toJsonString())
+
+    const [[restoredKey, restoredValue]] = restored.toArray()
+    expect(restoredKey).toEqual(key)
+    expect(restoredKey.createdAt).toBeInstanceOf(Date)
+    expect(restoredKey.createdAt.getTime()).toEqual(key.createdAt.getTime())
+    expect(Object.hasOwn(restoredKey, 'missing')).toBeTruthy()
+    expect(restored.get(key)).toEqual(sparseValue)
+    expect(restoredValue).toEqual(sparseValue)
+    expect(Object.hasOwn(restoredValue as unknown[], 0)).toBeFalsy()
+    expect(Object.hasOwn(restoredValue as unknown[], 1)).toBeTruthy()
+})
+
+test('JSON round-trip preserves special primitive keys and invalid dates', () => {
+    const original = new JsonMap<unknown, string>([
+        [NaN, 'nan'],
+        [Infinity, 'infinity'],
+        [-Infinity, 'negative infinity'],
+        [undefined, 'undefined'],
+        [new Date(NaN), 'invalid date']
+    ])
+    const restored = new JsonMap<unknown, string>()
+
+    restored.initFromJsonString(original.toJsonString())
+
+    expect(restored.get(NaN)).toEqual('nan')
+    expect(restored.get(Infinity)).toEqual('infinity')
+    expect(restored.get(-Infinity)).toEqual('negative infinity')
+    expect(restored.get(undefined)).toEqual('undefined')
+    const invalidDate = restored.toArray().find(([key]) => key instanceof Date)?.[0] as Date
+    expect(invalidDate).toBeInstanceOf(Date)
+    expect(Number.isNaN(invalidDate.getTime())).toBeTruthy()
+})
+
+test('JSON serialization rejects values that cannot round-trip', () => {
+    const withFunction = new JsonMap<string, unknown>([['key', () => undefined]])
+    expect(() => withFunction.toJsonString()).toThrow(/Cannot serialize function/)
+
+    const withClassInstance = new JsonMap<string, unknown>([['key', new MyClass('value')]])
+    expect(() => withClassInstance.toJsonString()).toThrow(/Cannot serialize MyClass/)
+
+    const circular:Record<string, unknown> = {}
+    circular.self = circular
+    const withCircularValue = new JsonMap<string, unknown>([['key', circular]])
+    expect(() => withCircularValue.toJsonString()).toThrow(/Cannot serialize circular value/)
+})
+
+test('legacy JSON array serialization remains readable', () => {
+    const map = new JsonMap<{id:number}, string>()
+    map.initFromJsonString('[[{"id":1},"value"]]')
+    expect(map.get({id: 1})).toEqual('value')
 })
 
 test('typed object as key', () => {

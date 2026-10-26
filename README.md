@@ -183,7 +183,9 @@ Get map as array.
 
 ### toJsonString(pretty:boolean=false):string
 
-Get map as json string.
+Get the map as a versioned JSON string. The tagged format preserves plain objects, arrays (including sparse arrays), `Date`, `undefined`, `NaN`, infinities, and negative zero in both keys and values.
+
+Functions, symbols, bigint values, circular references, symbol-keyed properties, and class instances other than `Date` cannot be represented and cause a `TypeError` instead of being changed silently.
 
 ```typescript
     myMap.toJsonString(true)
@@ -194,7 +196,7 @@ Get map as json string.
 
 ### initFromJsonString(jsonString:string):JsonMap<K,V>
 
-Fill map with keys and values from json string.
+Fill the map from the tagged string returned by `toJsonString`. Legacy JSON array payloads produced by versions before 2.0.1 are also accepted.
  
  ```typescript
     myMap.initFromJsonString(mySavedJsonString)
