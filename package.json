@@ -1,7 +1,7 @@
 {
     "sideEffects": false,
     "name": "@lexriver/json-map",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Use object as a key for Map",
     "type": "module",
     "exports": "./out/src/JsonMap.mjs",
@@ -28,6 +28,6 @@
         "vitest": "^2.1.1"
     },
     "dependencies": {
-        "@lexriver/data-types": "^3.1.0"
+        "@lexriver/data-types": "^3.6.6"
     }
 }
